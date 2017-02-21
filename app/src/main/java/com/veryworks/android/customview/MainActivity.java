@@ -146,10 +146,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     if(map[i][j] != 0){
                         canvas.drawRect(
+                                // 왼쪽 위 꼭지점
                                 unit * j, // 왼쪽 위 x
                                 unit * i, // 왼쪽 위 y
+                                // 오른쪽 아래 꼭지점
                                 unit * j + unit, // 오른쪽 아래 x
                                 unit * i + unit, // 오른쪽 아래 y
+
                                 black );
                     }
 
@@ -160,7 +163,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             canvas.drawCircle(
                     player_x * unit + player_radius, // 플레이어의 x좌표 : 중심축 기준이므로 반지름값을 더해준다
                     player_y * unit + player_radius, // 플레이어의 y좌표
-                    player_radius, magenta );
+                    player_radius, // 플레이어의 반지름
+                    magenta );
         }
     }
 
