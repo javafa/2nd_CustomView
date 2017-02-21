@@ -98,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         // 화면을 다시그려주는 함수 -> 화면을 지운후에 onDraw를 호출해준다
         view.invalidate();
+
+        // 목표지점에 도달하면 다음 스테이지 또는 앱 종료
         if(map[player_y][player_x] == 2){
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
             dialog.setTitle("Finish");
