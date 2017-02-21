@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
    private void init(){
        DisplayMetrics metrics = getResources().getDisplayMetrics();
+       // unit 은 화면사이즈 / 그라운드 칸수
        unit = metrics.widthPixels / GROUND_SIZE;
+       // player_radius 는 반지름이므로 unit 을 반으로 나눈다
        player_radius = unit/2;
 
        player_x = 0;
@@ -141,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // 맵을 화면에 그린다
             for(int i=0; i<map.length ; i++){
                 for(int j=0 ; j<map[0].length ; j++){
+
                     if(map[i][j] != 0){
                         canvas.drawRect(
                                 unit * j, // 왼쪽 위 x
@@ -149,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 unit * i + unit, // 오른쪽 아래 y
                                 black );
                     }
+
                 }
             }
 
