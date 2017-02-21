@@ -29,24 +29,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int player_y = 0;
     float player_radius = 0;
 
-    // 맵 정보
-    final int map[][] = {
-            {0,0,1,0,0,0,0,0,0,0},
-            {0,0,1,1,0,1,1,1,1,0},
-            {0,1,0,0,0,0,0,0,1,0},
-            {0,1,0,1,1,1,1,0,0,0},
-            {0,1,0,0,0,0,1,0,1,1},
-            {0,1,1,1,1,0,1,0,1,0},
-            {0,1,0,0,0,0,1,0,1,0},
-            {0,1,0,1,1,1,1,0,1,0},
-            {0,1,0,1,0,0,0,0,1,0},
-            {0,0,0,1,0,1,1,0,0,2},
-    };
+    // 스테이지 정보
+    Stage stage;
+    // 스테이지 레벨
+    int stage_level = 1;
+    // 맵 정보 < Stage 에서 맵을 꺼내서 담아주는 변수
+    int map[][];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        stage = new Stage();
 
         init();
 
@@ -75,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
        player_x = 0;
        player_y = 0;
+       map = stage.getStage(stage_level);
    }
 
     @Override
