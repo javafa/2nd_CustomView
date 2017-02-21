@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FrameLayout ground;
     Button btnUp,btnDown,btnLeft,btnRight;
 
+    // 화면칸수
     private static final int GROUND_SIZE = 10;
     // 이동단위
     int unit = 0;
@@ -71,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        player_y = 0;
    }
 
-
     @Override
     public void onClick(View v) {
         switch(v.getId()){
@@ -97,6 +97,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         view.invalidate();
     }
 
+    // 충돌검사
+    // 진행방향에 장애물이 있는지 검사해준다
+    // 장애물이 있으면 true 리턴
     private boolean collisionCheck(String direction){
         if(direction.equals("up")){
             if(map[player_y-1][player_x] == 1){
@@ -115,8 +118,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
             }
         }
-
-
         return false;
     }
 
@@ -152,8 +153,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             // 플레이어를 화면에 그린다
             canvas.drawCircle(
-                    player_x * unit + player_radius,
-                    player_y * unit + player_radius,
+                    player_x * unit + player_radius, // 플레이어의 x좌표 : 중심축 기준이므로 반지름값을 더해준다
+                    player_y * unit + player_radius, // 플레이어의 y좌표
                     player_radius, magenta );
         }
     }
