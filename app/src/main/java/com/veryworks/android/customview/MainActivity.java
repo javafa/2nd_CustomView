@@ -20,14 +20,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // 화면칸수
     private static final int GROUND_SIZE = 10;
-    private int deviceWidth = 0;
+    private float deviceWidth = 0;
     // 이동단위
-    int unit = 0;
+    float unit = 0;
 
     // 플레이어 정보
     int player_x = 0;
     int player_y = 0;
-    int player_radius = 0;
+    float player_radius = 0;
 
     // 맵 정보
     final int map[][] = {
