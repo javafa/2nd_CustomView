@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // 화면칸수
     private static final int GROUND_SIZE = 10;
+    private int deviceWidth = 0;
     // 이동단위
     int unit = 0;
 
@@ -30,16 +31,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // 맵 정보
     final int map[][] = {
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,1,1,0,0,0,0,0,0},
-            {0,1,0,1,0,0,0,0,0,0},
-            {0,0,0,1,1,1,1,0,0,0},
-            {0,0,1,0,0,0,1,0,0,0},
-            {0,0,1,0,0,0,1,0,0,0},
             {0,0,1,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
+            {0,0,1,1,0,1,1,1,1,0},
+            {0,1,0,0,0,0,0,0,1,0},
+            {0,1,0,1,1,1,1,0,0,0},
+            {0,1,0,0,0,0,1,0,1,1},
+            {0,1,1,1,1,0,1,0,1,0},
+            {0,1,0,0,0,0,1,0,1,0},
+            {0,1,0,1,1,1,1,0,1,0},
+            {0,1,0,1,0,0,0,0,1,0},
+            {0,0,0,1,0,1,1,0,0,2},
     };
 
     @Override
@@ -67,7 +68,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
    private void init(){
        DisplayMetrics metrics = getResources().getDisplayMetrics();
        // unit 은 화면사이즈 / 그라운드 칸수
-       unit = metrics.widthPixels / GROUND_SIZE;
+       deviceWidth = metrics.widthPixels;
+       unit = deviceWidth / GROUND_SIZE;
        // player_radius 는 반지름이므로 unit 을 반으로 나눈다
        player_radius = unit/2;
 
@@ -129,22 +131,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 1. 색상을 정의
         Paint magenta = new Paint();
         Paint black = new Paint();
+        Paint goal = new Paint();
+        Paint mapColor;
+
+        Paint outline = new Paint();
 
         public CustomView(Context context) {
             super(context);
             magenta.setColor(Color.MAGENTA);
             black.setColor(Color.BLACK);
+            goal.setColor(Color.GREEN);
+            outline.setStyle(Paint.Style.STROKE);
+            outline.setColor(Color.BLACK);
+            outline.setStrokeWidth(10);
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
 
+            // 외곽선을 그린다
+            canvas.drawRect(0,0,deviceWidth,deviceWidth,outline);
+
             // 맵을 화면에 그린다
             for(int i=0; i<map.length ; i++){
                 for(int j=0 ; j<map[0].length ; j++){
-
-                    if(map[i][j] != 0){
+                    int current = map[i][j];
+                    if(current != 0) {
+                        switch (map[i][j]) {
+                            case 1: // 장애물 박스
+                                mapColor = black;
+                                break;
+                            case 2: // 도착지점
+                                mapColor = goal;
+                                break;
+                        }
                         canvas.drawRect(
                                 // 왼쪽 위 꼭지점
                                 unit * j, // 왼쪽 위 x
@@ -152,10 +173,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 // 오른쪽 아래 꼭지점
                                 unit * j + unit, // 오른쪽 아래 x
                                 unit * i + unit, // 오른쪽 아래 y
-
-                                black );
+                                mapColor);
                     }
-
                 }
             }
 
