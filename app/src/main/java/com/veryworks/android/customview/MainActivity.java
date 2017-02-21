@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int player_y = 0;
     int player_radius = 0;
 
+    // 맵 정보
     final int map[][] = {
             {0,0,0,0,0,0,0,0,0,0},
             {0,0,1,1,0,0,0,0,0,0},
