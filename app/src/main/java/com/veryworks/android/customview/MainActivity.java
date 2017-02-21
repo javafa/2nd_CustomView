@@ -1,10 +1,12 @@
 package com.veryworks.android.customview;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         stage = new Stage();
 
-        init();
+        init(stage_level);
 
         ground = (FrameLayout) findViewById(R.id.ground);
         btnUp = (Button) findViewById(R.id.btnUp);
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ground.addView(view);
     }
 
-   private void init(){
+   private void init(int stage_level){
        DisplayMetrics metrics = getResources().getDisplayMetrics();
        // unit 은 화면사이즈 / 그라운드 칸수
        deviceWidth = metrics.widthPixels;
@@ -96,6 +98,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         // 화면을 다시그려주는 함수 -> 화면을 지운후에 onDraw를 호출해준다
         view.invalidate();
+        if(map[player_y][player_x] == 2){
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setTitle("Finish");
+            dialog.setMessage("Stage Clear!!!");
+            dialog.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    stage_level++;
+                    init(stage_level);
+                    view.invalidate();
+                }
+            })
+            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            dialog.show();
+        }
     }
 
     // 충돌검사
